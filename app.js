@@ -1,7 +1,7 @@
-var express = require("express"),
-app         = express(),
-bodyParser  = require("body-parser"),
-mongoose    = require("mongoose");
+var bodyParser  = require("body-parser"),
+mongoose        = require("mongoose"),
+express         = require("express"),
+app             = express();
 
 //APP CONFIG
 mongoose.connect("mongodb://localhost/blog_app");
@@ -14,12 +14,23 @@ var blogSchema = new mongoose.Schema({
     title: String,
     image: String,
     body: String,
-    Created: {type: Date, default: Date.now}
+    created: {type: Date, default: Date.now}
 });
 var Blog = mongoose.model("Blog", blogSchema);
 
 //RESTFUL ROUTES
-
+app.get("/", function(req, res){
+    res.redirect("/blogs");
+});
+app.get("/blogs", function(req, res){
+    Blog. find({}, function(err, blogs){
+        if(err){
+            console.log("ERROR!");
+        }else{
+            res.render("index", {blogs: blogs});
+        }
+    });
+});
 
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log("SERVER IS RUNNING!");
