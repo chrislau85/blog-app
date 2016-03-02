@@ -9,3 +9,7 @@ i.icon{
 #delete{
     display: inline;
 }
+
+.ui.button>.right.icon:not(.button) {
+    margin-top: 10px;
+}
